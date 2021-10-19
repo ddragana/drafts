@@ -29,7 +29,7 @@ informative:
 
 This specification introduces a way to advertise the support for the extended CONNECT feature that
 is used for running the WebSocket protocol over a single stream of an HTTP/2 and HTTP/3
-connection using HTTPS resource records. {{HTTPSRR}}.
+connection using HTTPS resource records {{HTTPSRR}}.
 
 
 --- note_Note_to_Readers
