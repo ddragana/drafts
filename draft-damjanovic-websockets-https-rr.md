@@ -1,6 +1,6 @@
 ---
 title: "Advertising WebSocket support in the HTTPS resource record"
-docname: draft-damjanovic-websocket-http-rr
+docname: draft-damjanovic-websockets-https-rr
 category: info
 
 ipr: trust200902
