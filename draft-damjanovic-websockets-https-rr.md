@@ -27,7 +27,10 @@ informative:
 --- abstract
 
 This specification introduces a mechanism to advertise the support for WebSockets
-over different HTTP versions using HTTPS resource records {{HTTPSRR}}.
+over different HTTP versions using HTTPS resource records {{HTTPSRR}}. This
+mechanism allows clients to avoid delays in establishing WebSocket connections
+using HTTP-based advertisement for WebSocket support.
+
 
 --- middle
 
@@ -83,19 +86,17 @@ indication of whether a particular service endpoint supports the WebSocket
 Protocol over HTTP /2 or HTTP/3.
 
 If the key is present, that is a strong indication that the service endpoint
-supports WebSockets over HTTP/2 or HTTP/3 protocol and the client should
+supports WebSockets over HTTP/2 or HTTP/3 protocol and the client can
 attempt using WebSockets over HTTP/2 or HTTP/3 protocol. Due to difficulties
 of deployments, the client may discover that the feature, although
 advertised, is not supported and in this case, the client should fall back
 to using HTTP/1.1.
 
-Using the "wss" SvcParamKey it is not possible to exclude the support for
-the WebSocket Protocol over HTTP/1.1. It is supported except the
-no-default-alpn SvcParamKey is present in which case HTTP/1.1 protocol is
-not supported on an endpoint.
+If the "no-default-alpn" key is present the WebSocket Protocol over HTTP/1.1
+is not supported by the endpoint. Otherwise, it might be supported whether
+the "wss" key is present or not.
 
-
-If the key is not present the client should not try using WebSockets over
+If the "wss" key is not present the client should not try using WebSockets over
 HTTP/2 and HTTP/3, and should directly use HTTP/1.1.
 
 
