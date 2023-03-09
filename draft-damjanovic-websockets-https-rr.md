@@ -92,11 +92,11 @@ of deployments, the client may discover that the feature, although
 advertised, is not supported and in this case, the client should fall back
 to using HTTP/1.1.
 
-If the "no-default-alpn" key is present the WebSocket Protocol over HTTP/1.1
+If the "no-default-alpn" key is present, the WebSocket Protocol over HTTP/1.1
 is not supported by the endpoint. Otherwise, it might be supported whether
 the "wss" key is present or not.
 
-If the "wss" key is not present the client should not try using WebSockets over
+If the "wss" key is not present, the client should not try using WebSockets over
 HTTP/2 and HTTP/3, and should directly use HTTP/1.1.
 
 
