@@ -27,7 +27,7 @@ informative:
 --- abstract
 
 This specification introduces a mechanism to advertise the support for WebSockets
-over different HTTP versions using HTTPS resource records {{HTTPSRR}}. This
+over different HTTP versions using HTTPS resource records. This
 mechanism allows clients to avoid delays in establishing WebSocket connections
 using HTTP-based advertisement for WebSocket support.
 
@@ -40,7 +40,7 @@ The mechanisms for running the WebSocket Protocol over a single stream of an
 HTTP/2 and HTTP/3 connection are defined in {{!RFC8441}} and {{!RFC9220}}.
 For bootstrapping WebSockets from HTTP/2 and HTTP/3 the extended CONNECT is used.
 The support for the extended CONNECT is advertised using HTTP/2 and HTTP/3 settings
-(see {{!RFC7540}} and {{!RFC9114}}). A client needs to establish an HTTP/2 or
+(see {{!RFC9113}} and {{!RFC9114}}). A client needs to establish an HTTP/2 or
 HTTP/3 connection and wait for the setting frames to be exchanged to discover
 whether it can try to use WebSockets over HTTP/2 or HTTP/3. The request still may
 be rejected because the settings advertise the support for the extended CONNECT
