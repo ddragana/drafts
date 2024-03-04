@@ -44,11 +44,11 @@ only. The attacker would send specially crafted WebSocket messages that will
 be interpreted as a new request by the intermediaries and cached according to
 the hostname chosen by the attacker. This leads to cache poisoning.
 
-If the end-to-end encryption is used the messages would be changed on the
-wire and intermediaries will be denied access to the unencrypted traffic, but
-this does not protect against the attack because the attacker has access to TLS
-keys and can craft WebSocket messages that look like an HTTP request after
-encryption. For the attack to success when encrypted connection is use the
+If end-to-end encryption is used the messages would be changed on the wire and
+intermediaries will be denied access to the unencrypted traffic, but this does
+not protect against the attack because the attacker has access to TLS keys and
+can craft WebSocket messages that after encryption look like a cleartext HTTP
+request. For the attack to succeed when an encrypted connection is used the
 following is needed:
 
 * the caching proxies described above would cache content from the encrypted
