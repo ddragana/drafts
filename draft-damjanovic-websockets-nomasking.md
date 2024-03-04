@@ -52,7 +52,7 @@ encryption. For the attack to success when encrypted connection is use the
 following is needed:
 
 * the caching proxies described above would cache content from the encrypted
-connection, on port 443, which is highly unlikely, and
+connection, on port 443, as plain text which is highly unlikely, and
 
 * clients would need to access otherwise HTTPS capable site using insecure HTTP.
 Considering existing techniques, e.g. HSTS {{!RFC6797}} this is less likely to
