@@ -28,7 +28,7 @@ omitted when intermediaries do not have access to the unencrypted traffic.
 
 This specification introduces a WebSocket extension that disables the mandatory
 masking of frames sent from the client to the server. The extension is allowed
-only under special circumstances where masking is known to be unnecessary.
+only if the client uses an encrypted connection.
 
 --- middle
 
@@ -47,8 +47,8 @@ infrastructure that is behind TLS terminating proxies.
 This specification introduces a WebSocket extension that disables the masking
 of frames sent from the client to the server. The support for the extension
 will be advertised by the client (see {{Section 9 of !RFC6455}}). The server
-may accept the extension only after careful consideration discussed in Section
-{{serv}}. The extension may only be advertised if secure transport is used.
+may accept or decline the extension. The client can advertise the extension
+only if an encrypted connection.
 
 
 # Conventions and Definitions
@@ -64,9 +64,7 @@ sent in the "Sec-WebSocket-Extensions" header field. The server accepts the
 extension, by sending "no-masking" in the "Sec-WebSocket-Extensions" header
 value.
 
-The client MUST NOT send the extension if a non-secure connection is not used
-on the connection. The server MUST reject the upgrade request if the
-"no-masking" extension is advertised on a non-secure connection.
+The client MUST NOT send the extension if a non-secure connection is used.
 
 If the "no-masking" extension is negotiated the client and the server behavior
 are:
@@ -79,19 +77,6 @@ field "frame-masked" to 0 on all frames. As defined in {{!RFC6455}}, the field
 If the server receives a frame with the field "frame-masked" set to 1, it MUST
 close the connection with the status code 1002 define in {{Section 7.4.1 of
 !RFC6455}}.
-
-
-## Server behavior considerations {#serv}
-
-
-If a WebSocket connection is end-to-end encrypted the server can accept the
-"no-masking" extension.
-
-In case the connection is not end-to-end encrypted MUST NOT accept the
-"no-masking" extension.
-
-Intermediaries that terminate TLS connection should remove the extension from
-the "Sec-WebSocket-Extensions" header field.
 
 # Security Considerations
 
