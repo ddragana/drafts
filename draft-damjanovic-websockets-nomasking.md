@@ -35,14 +35,23 @@ only if the client uses an encrypted connection.
 # Introduction
 
 The WebSocket protocol specifies that all frames sent from the client to the
-server must be masked {{!RFC6455}}. This was introduced as a protection against
-a possible attack on the infrastructure described in {{Section 10.3 of
-!RFC6455}}. The attack can be performed on intermediaries, such as proxies and
-it could cause cache poisoning. Using end-to-end encryption, the attack can be
-mitigated without the use of masking. This is because every intermediary will
-be denied access to the unencrypted traffic, which prevents the caching attack.
-The masking has been made mandatory for the connection using TLS to protect the
-infrastructure that is behind TLS terminating proxies.
+server must be masked {{!RFC6455}}. This was introduced as a protection
+against a possible attack on the infrastructure described in {{Section 10.3
+of !RFC6455}}. The attack can be performed on intermediaries, such as caching
+proxies. The affected intermediaries interpret data sent after the WebSocket
+upgrade handshake as a new request and cache it according to the hostname
+only. The attacker would send specially crafted WebSocket messages that will
+be interpreted as a new request by the intermediaries and cached according to
+the hostname chosen by the attacker. This leads to cache poisoning. If the
+end-to-end encryption is used the messages would be changed on the wire and
+intermediaries will be denied access to the unencrypted traffic. Although the
+data look different on the wire, the attacker has access to TLS keys and can
+craft WebSocket messages that look like an HTTP request after encryption.
+
+Considering that the upgrade mechanism is not new and that it is unlikely
+that caching proxies described above would cache content from the encrypted
+connection, we propose to disable masking if end-to-end encryption is used.
+Removing masking will remove unnecessary processing.
 
 This specification introduces a WebSocket extension that disables the masking
 of frames sent from the client to the server. The support for the extension
