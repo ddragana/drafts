@@ -35,14 +35,34 @@ only if the client uses an encrypted connection.
 # Introduction
 
 The WebSocket protocol specifies that all frames sent from the client to the
-server must be masked {{!RFC6455}}. This was introduced as a protection against
-a possible attack on the infrastructure described in {{Section 10.3 of
-!RFC6455}}. The attack can be performed on intermediaries, such as proxies and
-it could cause cache poisoning. Using end-to-end encryption, the attack can be
-mitigated without the use of masking. This is because every intermediary will
-be denied access to the unencrypted traffic, which prevents the caching attack.
-The masking has been made mandatory for the connection using TLS to protect the
-infrastructure that is behind TLS terminating proxies.
+server must be masked {{!RFC6455}}. This was introduced as a protection
+against a possible attack on the infrastructure described in {{Section 10.3
+of !RFC6455}}. The attack can be performed on intermediaries, such as caching
+proxies. The affected intermediaries interpret data sent after the WebSocket
+upgrade handshake as a new request and cache it according to the hostname
+only. The attacker would send specially crafted WebSocket messages that will
+be interpreted as a new request by the intermediaries and cached according to
+the hostname chosen by the attacker. This leads to cache poisoning.
+
+If end-to-end encryption is used the messages would be changed on the wire and
+intermediaries will be denied access to the unencrypted traffic, but this does
+not protect against the attack because the attacker has access to TLS keys and
+can craft WebSocket messages that after encryption look like a cleartext HTTP
+request. For the attack to succeed when an encrypted connection is used the
+following is needed:
+
+* the caching proxies described above would cache content from the encrypted
+connection, on port 443, as plain text which is highly unlikely, and
+
+* clients would need to access otherwise HTTPS capable site using insecure HTTP.
+Considering existing techniques, e.g. HSTS {{!RFC6797}} this is less likely to
+affect many users.
+
+Considering that the upgrade mechanism is widely use now, therefore many
+intermediaries have adopted it and that it is highly unlikely that the attack
+would succeed if an encrypted connection is used, we propose to disable
+masking if end-to-end encryption is used. Removing masking will remove
+unnecessary processing.
 
 This specification introduces a WebSocket extension that disables the masking
 of frames sent from the client to the server. The support for the extension
