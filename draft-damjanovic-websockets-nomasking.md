@@ -52,13 +52,16 @@ request. For the attack to succeed when an encrypted connection is used the
 following is needed:
 
 * the caching proxies described above would cache content from the encrypted
-connection, on port 443, as plain text which is highly unlikely, and
+connection. The encrypted traffic is usually sent to port 443. Since the
+caching proxies cache cleartext content it is highly likely that they only
+cache content from port 80.
 
-* clients would need to access otherwise HTTPS capable site using insecure HTTP.
-Considering existing techniques, e.g. HSTS {{!RFC6797}} this is less likely to
-affect many users.
+* Clients would need to access content using unsecured HTTP. Taking into
+account that there is less content that is insecure and the existing
+techniques to ensure HTTPS is used if available, e.g. HSTS {{!RFC6797}} this
+is less likely to affect many users.
 
-Considering that the upgrade mechanism is widely use now, therefore many
+Considering that the upgrade mechanism is widely used now, therefore many
 intermediaries have adopted it and that it is highly unlikely that the attack
 would succeed if an encrypted connection is used, we propose to disable
 masking if end-to-end encryption is used. Removing masking will remove
